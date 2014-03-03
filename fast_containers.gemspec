@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.description = "A thin wrapper around C++ containers (presently only around priority queues)"
   s.authors     = ["Roberto Esposito"]
   s.email       = ["boborbt@gmail.com"]
-  s.homepage    = "http://www.di.unito.it/~esposito"
+  s.homepage    = "https://github.com/boborbt/fast_containers"
   s.files       = ["lib/fc.rb", "ext/fast_containers/FastContainers.cpp", "ext/fast_containers/fc_pq.cpp", "ext/fast_containers/fc_pq.h"]
   s.extensions   << "ext/fast_containers/extconf.rb"
   s.licenses     = ['MIT']

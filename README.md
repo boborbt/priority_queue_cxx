@@ -5,6 +5,12 @@ Fast Containers is a small wrapper around c++ containers. It aims at implementin
 ## Containers included in the current version
 Presently the library includes only PriorityQueues
 
+## Installation
+
+```
+gem install 'fast_containers'
+```
+
 ## Example usage
 
 ```ruby

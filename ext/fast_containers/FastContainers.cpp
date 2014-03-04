@@ -213,13 +213,13 @@ extern "C" {
     rb_global_variable(&FastContainers);
     rb_global_variable(&PriorityQueue);
     
-    rb_define_singleton_method(PriorityQueue, "new", (VALUE(*)(ANYARGS))pq_new, 1);
-    rb_define_method(PriorityQueue, "push", (VALUE(*)(ANYARGS)) pq_push, 2);
-    rb_define_method(PriorityQueue, "top", (VALUE(*)(ANYARGS)) pq_top, 0);
-    rb_define_method(PriorityQueue, "top_key", (VALUE(*)(ANYARGS)) pq_top_key, 0);
-    rb_define_method(PriorityQueue, "pop", (VALUE(*)(ANYARGS)) pq_pop, 0);
-    rb_define_method(PriorityQueue, "empty", (VALUE(*)(ANYARGS)) pq_empty, 0);
-    rb_define_method(PriorityQueue, "each", (VALUE(*)(ANYARGS)) pq_each, 0);
-    rb_define_method(PriorityQueue, "pop_each", (VALUE(*)(ANYARGS)) pq_pop_each, 0);
+    rb_define_singleton_method(PriorityQueue, "new", RUBY_METHOD_FUNC(pq_new), 1);
+    rb_define_method(PriorityQueue, "push",     RUBY_METHOD_FUNC(pq_push), 2);
+    rb_define_method(PriorityQueue, "top",      RUBY_METHOD_FUNC(pq_top), 0);
+    rb_define_method(PriorityQueue, "top_key",  RUBY_METHOD_FUNC(pq_top_key), 0);
+    rb_define_method(PriorityQueue, "pop",      RUBY_METHOD_FUNC(pq_pop), 0);
+    rb_define_method(PriorityQueue, "empty",    RUBY_METHOD_FUNC(pq_empty), 0);
+    rb_define_method(PriorityQueue, "each",     RUBY_METHOD_FUNC(pq_each), 0);
+    rb_define_method(PriorityQueue, "pop_each", RUBY_METHOD_FUNC(pq_pop_each), 0);
   }
 }

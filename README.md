@@ -30,7 +30,7 @@ q.pop
 ## How fast is it?
 
 As far as I know, there are no C extensions implementing priority queues to date. This implies that the provided implementation is a *lot* faster than the best current alternative. 
-To get an idea about how faster it is, here it follows a comparison of the time needed by [algorithms](https://github.com/kanwei/algorithms) priority queue implementation and the FastContainers implementation.
+To get an idea about how faster it is, here it follows a comparison of the time needed to push and pop 50.000 elements by [algorithms](https://github.com/kanwei/algorithms) priority queue implementation and by the FastContainers implementation.
 
 ```ruby
 

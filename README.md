@@ -1,5 +1,7 @@
 # FastContainers
 
+[![Gem Version](https://badge.fury.io/rb/fast_containers.png)](http://badge.fury.io/rb/fast_containers)
+
 FastContainers is a light wrapper library around c++ containers. It aims at implementing a number of containers that are not in the standard ruby library and are presently only available as pure ruby libraries. 
 
 ## Containers included in the current version

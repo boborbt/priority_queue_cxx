@@ -11,7 +11,7 @@ Presently the library includes only PriorityQueues
 gem install 'fast_containers'
 ```
 
-## Example usage
+## Usage Example
 
 ```ruby
    require 'fc'

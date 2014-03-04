@@ -6,6 +6,33 @@
 static VALUE FastContainers = Qnil;
 static VALUE PriorityQueue = Qnil;
 
+// --------------------------------------------------------------------------------
+// UTILITIES 
+// --------------------------------------------------------------------------------
+
+static fc_pq::PQueue pq_from_self(VALUE self) {
+  fc_pq::PQueue queue;
+  Data_Get_Struct(self, struct fc_pq::_PQueue, queue);
+  
+  return queue;
+}
+
+static void pq_mark(void *ptr) {
+  if(ptr==NULL)
+    return;
+  
+  fc_pq::PQueueIterator it = fc_pq::iterator((fc_pq::PQueue)ptr);
+  while( !fc_pq::iterator_end(it) ) {
+    rb_gc_mark( (VALUE) fc_pq::iterator_get_value(it) );
+    it = fc_pq::iterator_next(it);
+  }
+  fc_pq::iterator_dispose(it);
+}
+
+// --------------------------------------------------------------------------------
+// METHODS 
+// --------------------------------------------------------------------------------
+
 /*
  * call-seq:
  *    PriorityQueue.new(queue_kind) 
@@ -27,7 +54,7 @@ static VALUE pq_new(VALUE klass, VALUE queue_kind) {
   else rb_raise(rb_eTypeError, "queue_kind parameter must be either :max or :min");
     
   fc_pq::PQueue queue = fc_pq::create(kind);
-  VALUE data = Data_Wrap_Struct(klass, 0, fc_pq::destroy, queue);
+  VALUE data = Data_Wrap_Struct(klass, pq_mark, fc_pq::destroy, queue);
   rb_obj_call_init(data, 0, NULL);
   return data;
 }
@@ -39,10 +66,7 @@ static VALUE pq_new(VALUE klass, VALUE queue_kind) {
  * Push the +obj+/+priority+ pair into the queue and returns self.
  */
 static VALUE pq_push(VALUE self, VALUE obj, VALUE priority) {
-  fc_pq::PQueue queue;
-  Data_Get_Struct(self, fc_pq::PQueue, queue);
-
-  fc_pq::push(queue, (void*)obj, NUM2DBL(priority));
+  fc_pq::push(pq_from_self(self), (void*)obj, NUM2DBL(priority));
   return self;
 }
 
@@ -53,10 +77,12 @@ static VALUE pq_push(VALUE self, VALUE obj, VALUE priority) {
  * Returns the object at the top of the priority queue.
  */
 static VALUE pq_top(VALUE self) {
-  fc_pq::PQueue queue;
-  Data_Get_Struct(self, fc_pq::PQueue, queue);
+  fc_pq::PQueue queue = pq_from_self(self);
+  if( fc_pq::empty(queue) ) {
+    return Qnil;
+  }
   
-  return (VALUE) fc_pq::top(queue);
+  return (VALUE) fc_pq::top( queue );
 }
 
 /*
@@ -66,10 +92,7 @@ static VALUE pq_top(VALUE self) {
  * Returns the priority of the object at the top of the priority queue.
  */
 static VALUE pq_top_key(VALUE self) {
-  fc_pq::PQueue queue;
-  Data_Get_Struct(self, fc_pq::PQueue, queue);
-  
-  double priority = fc_pq::top_key(queue);
+  double priority = fc_pq::top_key( pq_from_self(self) );
   return DBL2NUM(priority);
 }
 
@@ -81,8 +104,7 @@ static VALUE pq_top_key(VALUE self) {
  * Returns self.
  */
 static VALUE pq_pop(VALUE self) {
-  fc_pq::PQueue queue;
-  Data_Get_Struct(self, fc_pq::PQueue, queue);
+  fc_pq::PQueue queue = pq_from_self(self);
   
   if( fc_pq::empty(queue) )
     rb_raise(rb_eRuntimeError, "Pop called on an empty queue");
@@ -99,14 +121,62 @@ static VALUE pq_pop(VALUE self) {
  */
 
 static VALUE pq_empty(VALUE self) {
-  fc_pq::PQueue queue;
-  Data_Get_Struct(self, fc_pq::PQueue, queue);
-  
-  if( fc_pq::empty(queue) )
+  if( fc_pq::empty(pq_from_self(self)) )
     return Qtrue;
   else
     return Qfalse;
 }
+
+
+/*
+ * call-seq:
+ *    each { |obj,priority| ... } -> self
+ *
+ * Iterates through the priority queue yielding each element to the given block.
+ * The order of the yielded elements is not defined.
+ * Returns self.
+ */
+
+static VALUE pq_each(VALUE self) {
+  fc_pq::PQueue queue = pq_from_self(self);
+  
+  fc_pq::PQueueIterator iterator = fc_pq::iterator(queue);
+  while( !fc_pq::iterator_end(iterator) ) {
+    VALUE value = (VALUE) fc_pq::iterator_get_value(iterator);
+    VALUE num = DBL2NUM(fc_pq::iterator_get_key(iterator));
+    rb_yield_values( 2,value, num );
+    fc_pq::iterator_next(iterator);
+  }
+  fc_pq::iterator_dispose(iterator);
+  
+  return self;
+}
+
+/*
+ * call-seq:
+ *    pop_each { |obj, priority| ... } -> self
+ *
+ * Iterates through the priority queue popping the top element and
+ * yielding it to the block. The order of yielded elements is guaranteed
+ * to be the priority order.
+ * Returns self.
+ */
+
+static VALUE pq_pop_each(VALUE self) {
+  fc_pq::PQueue queue= pq_from_self(self);
+  while( !fc_pq::empty(queue) ) {
+    VALUE value = (VALUE) fc_pq::top(queue);
+    double key = fc_pq::top_key(queue);
+    fc_pq::pop(queue);
+    rb_yield_values(2, value, DBL2NUM(key));
+  }
+  
+  return self;
+}
+
+// --------------------------------------------------------------------------------
+// INITIALIZATION 
+// --------------------------------------------------------------------------------
 
 /*
  * Document-module: FastContainers
@@ -121,12 +191,16 @@ extern "C" {
   void Init_fast_containers() {
     FastContainers = rb_define_module("FastContainers");
     PriorityQueue = rb_define_class_under(FastContainers, "PriorityQueue", rb_cObject);
-    rb_define_singleton_method(PriorityQueue, "new", RUBY_METHOD_FUNC(pq_new), 1);
-    rb_define_method(PriorityQueue, "push", RUBY_METHOD_FUNC(pq_push), 2);
-    rb_define_method(PriorityQueue, "top", RUBY_METHOD_FUNC(pq_top), 0);
-    rb_define_method(PriorityQueue, "top_key", RUBY_METHOD_FUNC(pq_top_key), 0);
-    rb_define_method(PriorityQueue, "pop", RUBY_METHOD_FUNC(pq_pop), 0);
-    rb_define_method(PriorityQueue, "empty?", RUBY_METHOD_FUNC(pq_empty), 0);
+    rb_global_variable(&FastContainers);
+    rb_global_variable(&PriorityQueue);
+    
+    rb_define_singleton_method(PriorityQueue, "new", (VALUE(*)(ANYARGS))pq_new, 1);
+    rb_define_method(PriorityQueue, "push", (VALUE(*)(ANYARGS)) pq_push, 2);
+    rb_define_method(PriorityQueue, "top", (VALUE(*)(ANYARGS)) pq_top, 0);
+    rb_define_method(PriorityQueue, "top_key", (VALUE(*)(ANYARGS)) pq_top_key, 0);
+    rb_define_method(PriorityQueue, "pop", (VALUE(*)(ANYARGS)) pq_pop, 0);
+    rb_define_method(PriorityQueue, "empty", (VALUE(*)(ANYARGS)) pq_empty, 0);
+    rb_define_method(PriorityQueue, "each", (VALUE(*)(ANYARGS)) pq_each, 0);
+    rb_define_method(PriorityQueue, "pop_each", (VALUE(*)(ANYARGS)) pq_pop_each, 0);
   }
 }
-

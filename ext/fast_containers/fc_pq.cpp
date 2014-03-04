@@ -1,6 +1,5 @@
 #include "fc_pq.h"
 #include <iostream>
-#include <queue>
 
 namespace fc_pq {
   
@@ -17,34 +16,93 @@ namespace fc_pq {
       else return (lhs.second<rhs.second);
     }
   };
-
-  typedef std::priority_queue<PQElem, std::vector<PQElem>, PairsComparator> PQueueImpl;
-  #define Q(q) ((PQueueImpl*)(q))
   
+  // --------------------------------------
+  // PQueue
+  // --------------------------------------
+    
+  typedef std::vector<PQElem> PQueueStorage;
+  typedef struct _PQueue { 
+    PQueueStorage storage;
+    PairsComparator comparator;
+    
+    _PQueue(PQueueKind kind) : comparator(kind) { }
+  }* PQueue;  
+
   void destroy(PQueue q){
-    delete Q(q);  
+    delete q;
   }
   
   PQueue create(PQueueKind kind) {
-    return (PQueue)new PQueueImpl(PairsComparator(kind));
+    return new _PQueue(kind);
   }
   
   void push(PQueue q, void* value, double priority) {
-    Q(q)->push(PQElem(value, priority));
+    q->storage.push_back(PQElem(value, priority));
+    push_heap(q->storage.begin(), q->storage.end(), q->comparator);
   }
+  
   void* top(PQueue q) {
-    return Q(q)->top().first;
+    return q->storage.at(0).first;
   }
   
   double top_key(PQueue q) {
-    return Q(q)->top().second;
+    return q->storage.at(0).second;
   }
   
   void pop(PQueue q) {
-    Q(q)->pop();
+    pop_heap(q->storage.begin(), q->storage.end(), q->comparator);
+    q->storage.pop_back();
   }
   
   bool empty(PQueue q) {
-    return Q(q)->empty();
+    return q->storage.empty();
+  }
+  
+  // --------------------------------------
+  // Iterator
+  // --------------------------------------
+  
+
+  
+  typedef struct _PQueueIterator {
+    PQueueStorage::const_iterator iterator;
+    PQueueStorage* queue;
+    
+    _PQueueIterator(PQueue q) {
+      queue = &q->storage;
+      iterator = q->storage.begin();      
+    }
+  } PQueueImplIterator;
+  #define QIT(it) ((PQueueImplIterator*)(it))
+  
+  /* Returns a new iterator object */
+  PQueueIterator iterator(PQueue q) {
+    PQueueImplIterator* it = new PQueueImplIterator(q);
+    return it;
+  }
+  
+  void iterator_dispose(PQueueIterator it) {
+    delete it;
+  }
+  
+  /* Returns the value of the current element */
+  void* iterator_get_value(PQueueIterator it) {
+    return it->iterator->first;
+  }
+  
+  /* Returns the priority of the current  element */
+  double iterator_get_key(PQueueIterator it) {
+    return it->iterator->second;
+  }
+  
+  /* Moves on to the next element */
+  PQueueIterator iterator_next(PQueueIterator it) {
+    it->iterator++;
+    return it;
+  }
+  
+  bool iterator_end(PQueueIterator it) {
+    return it->iterator == it->queue->end();
   }
 }

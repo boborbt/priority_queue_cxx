@@ -25,7 +25,7 @@ require 'benchmark'
 # Performs 50.000 pushes and pops in priority queues using the fc and
 # algorithms implementations and reports the time spent.
 
-N = 20_000
+N = 50_000
 algo_pq = Containers::PriorityQueue.new
 fc_pq = FastContainers::PriorityQueue.new(:min)
 

@@ -1,9 +1,9 @@
-# Fast Containers
+# FastContainers
 
-Fast Containers is a light wrapper around c++ containers. It aims at implementing a number of containers that are not in the standard ruby library and are only available as pure ruby libraries nowadays. 
+FastContainers is a light wrapper library around c++ containers. It aims at implementing a number of containers that are not in the standard ruby library and are presently only available as pure ruby libraries. 
 
 ## Containers included in the current version
-Presently the library includes a single class named PriorityQueue.
+Presently the library includes a single class named PriorityQueue. More containers will be added as necessity arises. Contributors are most welcome.
 
 ## Installation
 

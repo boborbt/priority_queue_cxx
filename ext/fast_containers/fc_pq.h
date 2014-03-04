@@ -1,8 +1,6 @@
 #ifndef FC_QUEUE_H_KTY6FH1S
 #define FC_QUEUE_H_KTY6FH1S
 
-#include <queue>
-
 namespace fc_pq {
   typedef void* PQueue;
   typedef enum { MIN_QUEUE, MAX_QUEUE } PQueueKind;

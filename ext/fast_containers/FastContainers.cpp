@@ -2,59 +2,18 @@
 #include "ruby.h"
 #include "fc_pq.h"
 
-
 // Defining a space for information and references about the module to be stored internally
 static VALUE FastContainers = Qnil;
 static VALUE PriorityQueue = Qnil;
 
-// Prototype for the initialization method - Ruby calls this, not you
-extern "C" { 
-  void Init_fast_containers(); 
-
-  /* Constructor. It defaults to construct a max queue. If true is passed
-  it construct a min queue.*/
-  VALUE pq_new(VALUE klass, VALUE min_queue);
-  
-  /* Destructor. Returns nil */
-  // VALUE pq_delete(VALUE self);
-  // 
-
-  /* Adding elements */
-  VALUE pq_push(VALUE self, VALUE value, VALUE priority);
-  
-  /* Inspecting the queue top (for values) */
-  VALUE pq_top(VALUE self);
-  
-  /* Inspecting the queue top (for priorities) */
-  VALUE pq_top_key(VALUE q);
-  
-  /* Removing the queue top */
-  VALUE pq_pop(VALUE q);
-
-  /* Returns true iff the queue is empty */
-  VALUE pq_empty(VALUE q);
-}
-
-// The initialization method for this module
-extern "C" {
-  void Init_fast_containers() {
-    FastContainers = rb_define_module("FastContainers");
-    PriorityQueue = rb_define_class_under(FastContainers, "PriorityQueue", rb_cObject);
-    rb_define_singleton_method(PriorityQueue, "new", (VALUE(*)(ANYARGS))pq_new, 1);
-    rb_define_method(PriorityQueue, "push", (VALUE(*)(ANYARGS)) pq_push, 2);
-    rb_define_method(PriorityQueue, "top", (VALUE(*)(ANYARGS)) pq_top, 0);
-    rb_define_method(PriorityQueue, "top_key", (VALUE(*)(ANYARGS)) pq_top_key, 0);
-    rb_define_method(PriorityQueue, "pop", (VALUE(*)(ANYARGS)) pq_pop, 0);
-    rb_define_method(PriorityQueue, "empty", (VALUE(*)(ANYARGS)) pq_empty, 0);
-  }
-}
-
 /*
+ * call-seq:
+ *    PriorityQueue.new(queue_kind) 
+ *
  * Create a new priority queue and returns it.
- * @param queue_kind [Symbol] specifies whether to build a :min or a :max queue.
+ * +queue_kind+ specifies whether to build a :min or a :max queue.
  */
-
-VALUE pq_new(VALUE klass, VALUE queue_kind) {
+static VALUE pq_new(VALUE klass, VALUE queue_kind) {
   if( TYPE(queue_kind) != T_SYMBOL ) {
     rb_raise(rb_eTypeError, "queue_kind parameter must be a symbol");
   }
@@ -74,12 +33,12 @@ VALUE pq_new(VALUE klass, VALUE queue_kind) {
 }
 
 /*
- * Push a new key/value pair into the queue and returns self.
- * @param obj [Object] the object to be stored into the queue
- * @param priority [Float] the priority of the object to be inserted
- * @return [FastContainers::PriorityQueue] self
+ * call-seq:
+ *    push(obj,priority) -> self
+ *
+ * Push the +obj+/+priority+ pair into the queue and returns self.
  */
-VALUE pq_push(VALUE self, VALUE obj, VALUE priority) {
+static VALUE pq_push(VALUE self, VALUE obj, VALUE priority) {
   fc_pq::PQueue queue;
   Data_Get_Struct(self, fc_pq::PQueue, queue);
 
@@ -88,9 +47,12 @@ VALUE pq_push(VALUE self, VALUE obj, VALUE priority) {
 }
 
 /*
- * @return [Object] the object at the top of the priority queue.
+ * call-seq:
+ *    top -> obj
+ *
+ * Returns the object at the top of the priority queue.
  */
-VALUE pq_top(VALUE self) {
+static VALUE pq_top(VALUE self) {
   fc_pq::PQueue queue;
   Data_Get_Struct(self, fc_pq::PQueue, queue);
   
@@ -98,9 +60,12 @@ VALUE pq_top(VALUE self) {
 }
 
 /*
- * @return [Float] the priority of the object at the top of the priority queue.
+ * call-seq:
+ *   top_key -> float
+ *
+ * Returns the priority of the object at the top of the priority queue.
  */
-VALUE pq_top_key(VALUE self) {
+static VALUE pq_top_key(VALUE self) {
   fc_pq::PQueue queue;
   Data_Get_Struct(self, fc_pq::PQueue, queue);
   
@@ -109,10 +74,13 @@ VALUE pq_top_key(VALUE self) {
 }
 
 /*
+ * call-seq:
+ *     pop -> self
+ *
  * Pops the top most element from the priority queue.
- * @return [FastContainers::PriorityQueue] self
+ * Returns self.
  */
-VALUE pq_pop(VALUE self) {
+static VALUE pq_pop(VALUE self) {
   fc_pq::PQueue queue;
   Data_Get_Struct(self, fc_pq::PQueue, queue);
   
@@ -124,10 +92,13 @@ VALUE pq_pop(VALUE self) {
 }
 
 /*
- * @return [TrueClass,FalseClass] true if the queue is empty
+ * call-seq:
+ *     empty?
+ *
+ * Returns true if the queue is empty
  */
 
-VALUE pq_empty(VALUE self) {
+static VALUE pq_empty(VALUE self) {
   fc_pq::PQueue queue;
   Data_Get_Struct(self, fc_pq::PQueue, queue);
   
@@ -135,5 +106,27 @@ VALUE pq_empty(VALUE self) {
     return Qtrue;
   else
     return Qfalse;
+}
+
+/*
+ * Document-module: FastContainers
+ * Exposes C++ implementation of some containers not defined in the standard ruby libraries.
+ */
+
+/*
+ * Document-class: FastContainers::PriorityQueue
+ * Implements priority queues through a C++ heap (using the standard std::priority_queue class)
+ */
+extern "C" {
+  void Init_fast_containers() {
+    FastContainers = rb_define_module("FastContainers");
+    PriorityQueue = rb_define_class_under(FastContainers, "PriorityQueue", rb_cObject);
+    rb_define_singleton_method(PriorityQueue, "new", RUBY_METHOD_FUNC(pq_new), 1);
+    rb_define_method(PriorityQueue, "push", RUBY_METHOD_FUNC(pq_push), 2);
+    rb_define_method(PriorityQueue, "top", RUBY_METHOD_FUNC(pq_top), 0);
+    rb_define_method(PriorityQueue, "top_key", RUBY_METHOD_FUNC(pq_top_key), 0);
+    rb_define_method(PriorityQueue, "pop", RUBY_METHOD_FUNC(pq_pop), 0);
+    rb_define_method(PriorityQueue, "empty?", RUBY_METHOD_FUNC(pq_empty), 0);
+  }
 }
 

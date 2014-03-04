@@ -1,5 +1,6 @@
 #include "fc_pq.h"
 #include <iostream>
+#include <queue>
 
 namespace fc_pq {
   

@@ -143,4 +143,16 @@ class TestFastContainers < MiniTest::Unit::TestCase
     pq.push("z",30);
     assert_equal 3, pq.size
   end
+  
+  def test_enumerable
+    pq = FastContainers::PriorityQueue.new(:max)
+    pq.push(1,10);
+    pq.push(2,20);
+    pq.push(3,30);
+    sum_o = 0
+    sum_p = 0
+    pq.map { |o,p| sum_o+=o; sum_p+=p }
+    assert_equal sum_o, 6
+    assert_equal sum_p, 60
+  end
 end

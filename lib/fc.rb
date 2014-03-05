@@ -21,9 +21,11 @@
 require 'fast_containers'
 
 module FastContainers
-  VERSION = "0.2.8"
+  VERSION = "0.2.9"
   
   class PriorityQueue
+    include Enumerable
+    
     alias_method :next, :top
     alias_method :next_key, :top_key
   end

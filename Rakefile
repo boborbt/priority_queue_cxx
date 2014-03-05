@@ -16,7 +16,7 @@ end
 # RDOC 
 # --------------------------------------------------------------------------------
 
-RDOC_FILES = FileList["README.md", "ext/fast_containers/FastContainers.cpp"]
+RDOC_FILES = FileList["README.md", "ext/fast_containers/FastContainers.cpp", "lib/fc.rb"]
 
 Rake::RDocTask.new do |rd|
     rd.main = "README.md"

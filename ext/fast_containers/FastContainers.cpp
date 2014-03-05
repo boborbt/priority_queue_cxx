@@ -121,10 +121,10 @@ static VALUE pq_top_key(VALUE self) {
 
 /*
  * call-seq:
- *     pop -> self
+ *     pop -> obj
  *
  * Pops the top most element from the priority queue.
- * Returns self.
+ * Returns the top object (before the pop).
  */
 static VALUE pq_pop(VALUE self) {
   fc_pq::PQueue queue = pq_from_self(self);
@@ -132,8 +132,10 @@ static VALUE pq_pop(VALUE self) {
   if( fc_pq::empty(queue) )
     rb_raise(rb_eRuntimeError, "Pop called on an empty queue");
   
+  VALUE top = (VALUE) fc_pq::top( queue );
   fc_pq::pop(queue);
-  return self;
+  
+  return top;
 }
 
 /*

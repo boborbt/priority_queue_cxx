@@ -21,5 +21,5 @@
 require 'fast_containers'
 
 module FastContainers
-  VERSION = "1.0.0"
+  VERSION = "0.2.6"
 end

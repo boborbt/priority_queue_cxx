@@ -218,7 +218,7 @@ extern "C" {
     rb_define_method(PriorityQueue, "top",      RUBY_METHOD_FUNC(pq_top), 0);
     rb_define_method(PriorityQueue, "top_key",  RUBY_METHOD_FUNC(pq_top_key), 0);
     rb_define_method(PriorityQueue, "pop",      RUBY_METHOD_FUNC(pq_pop), 0);
-    rb_define_method(PriorityQueue, "empty",    RUBY_METHOD_FUNC(pq_empty), 0);
+    rb_define_method(PriorityQueue, "empty?",    RUBY_METHOD_FUNC(pq_empty), 0);
     rb_define_method(PriorityQueue, "each",     RUBY_METHOD_FUNC(pq_each), 0);
     rb_define_method(PriorityQueue, "pop_each", RUBY_METHOD_FUNC(pq_pop_each), 0);
   }

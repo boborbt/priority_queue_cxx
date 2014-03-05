@@ -19,7 +19,7 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 require "minitest/autorun"
-require "fast_containers"
+require "fc"
 
 class TestFastContainers < MiniTest::Unit::TestCase
   def test_new_object_creation
@@ -89,11 +89,24 @@ class TestFastContainers < MiniTest::Unit::TestCase
   def test_empty_returns_false_if_the_queue_is_not_empty
     pq = FastContainers::PriorityQueue.new(:max) # this is a max queue
     pq.push("10", 10)
-    assert !pq.empty();
+    assert !pq.empty?
   end
   
   def test_empty_returns_true_if_the_queue_is_empty
     pq = FastContainers::PriorityQueue.new(:max) # this is a max queue
-    assert pq.empty();
+    assert pq.empty?
+  end
+  
+  def test_size_on_empty_queue
+    pq = FastContainers::PriorityQueue.new(:max)
+    assert_equal 0, pq.size
+  end
+  
+  def test_size_on_non_empty_queue
+    pq = FastContainers::PriorityQueue.new(:max)
+    pq.push("x",10);
+    pq.push("y",20);
+    pq.push("z",30);
+    assert_equal 3, pq.size
   end
 end

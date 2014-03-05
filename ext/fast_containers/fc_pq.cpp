@@ -57,6 +57,12 @@ namespace fc_pq {
     return new _PQueue(kind);
   }
   
+  /* Getting the size of the container */
+  unsigned int size(PQueue q) {
+     return q->storage.size();
+  }
+  
+  
   void push(PQueue q, void* value, double priority) {
     q->storage.push_back(PQElem(value, priority));
     push_heap(q->storage.begin(), q->storage.end(), q->comparator);

@@ -35,6 +35,9 @@ namespace fc_pq {
   /* Destructor */
   void destroy(PQueue q); 
   
+  /* Getting the size of the container */
+  unsigned int size(PQueue q);
+  
   /* Adding elements */
   void push(PQueue q, void* value, double priority);
   

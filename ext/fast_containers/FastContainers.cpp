@@ -78,6 +78,10 @@ static VALUE pq_new(VALUE klass, VALUE queue_kind) {
   return data;
 }
 
+static VALUE pq_size(VALUE self) {
+   return INT2NUM(fc_pq::size(pq_from_self(self)));
+}
+
 /*
  * call-seq:
  *    push(obj,priority) -> self
@@ -214,6 +218,7 @@ extern "C" {
     rb_global_variable(&PriorityQueue);
     
     rb_define_singleton_method(PriorityQueue, "new", RUBY_METHOD_FUNC(pq_new), 1);
+    rb_define_method(PriorityQueue, "size",     RUBY_METHOD_FUNC(pq_size), 0);
     rb_define_method(PriorityQueue, "push",     RUBY_METHOD_FUNC(pq_push), 2);
     rb_define_method(PriorityQueue, "top",      RUBY_METHOD_FUNC(pq_top), 0);
     rb_define_method(PriorityQueue, "top_key",  RUBY_METHOD_FUNC(pq_top_key), 0);

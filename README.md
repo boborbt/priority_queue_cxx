@@ -92,6 +92,13 @@ pq.each do |obj,priority|
 end
 ```
 
+#### next
+
+Alias for: [top](#label-top+%E2%86%92+obj)
+
+#### next_key
+
+Alias for: [top_key](#label-top_key+%E2%86%92+float)
 
 #### empty?
 
@@ -117,6 +124,10 @@ ary.pop_each {|obj, priority| print(priority, ',') } # => 1,6,55,90,100,
 
 Push the obj/priority pair into the queue and returns self.
 
+#### size  → num
+
+Returns the size of the priority queue
+
 #### top → obj
 
 Returns the object at the top of the priority queue.
@@ -124,3 +135,7 @@ Returns the object at the top of the priority queue.
 #### top_key → float
 
 Returns the priority of the object at the top of the priority queue.
+
+### Included Modules
+
+The class Includes Enumerable, so that standard enumeration based methods (e.g., map, all?, any?, ...) can all be used with this container. Notice that Enumerable methods are based on #each, implying that the order used to iterate through the container is undefined.

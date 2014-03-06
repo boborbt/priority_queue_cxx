@@ -78,6 +78,13 @@ static VALUE pq_new(VALUE klass, VALUE queue_kind) {
   return data;
 }
 
+/*
+ * call-seq:
+ *    size -> num
+ *
+ * Returns the size of the priority queue
+ */
+
 static VALUE pq_size(VALUE self) {
    return INT2NUM(fc_pq::size(pq_from_self(self)));
 }
@@ -210,7 +217,10 @@ static VALUE pq_pop_each(VALUE self) {
 
 /*
  * Document-class: FastContainers::PriorityQueue
- * Implements priority queues through a C++ heap (using the standard std::priority_queue class)
+ * Implements priority queues through a C++ heap (using the standard std::priority_queue class).
+ * Includes Enumerable, so that standard enumeration based methods (e.g., map, all?, any?, ...) 
+ * can all be used with this container. Notice that Enumerable methods are based on #each, implying
+ * that the order used to iterate through the container is undefined.
  */
 extern "C" {
   void Init_fast_containers() {

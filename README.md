@@ -9,8 +9,7 @@ Presently the library includes a single class named PriorityQueue. More containe
 
 ## Installation
 
-```
-
+```ruby
 gem install 'fast_containers'
 ```
 

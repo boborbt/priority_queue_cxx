@@ -65,9 +65,11 @@ fc:pop      0.030000   0.000000   0.030000 (  0.029664)
 
 Here it follows a transcription of the RDoc documentation for the library. I'm adding it here because I've having difficulties in instructing the 'gem' executable to generate the correct files on installation (everything works fine using rdoc from the command line though). Any suggestion about how to solve this problem is *very* welcome.
 
-### Public Class Methods
+### FastContainers::PriorityQueue
 
-#### new(queue_kind)
+#### Public Class Methods
+
+##### new(queue_kind)
 
 Create a new priority queue and returns it. queue_kind specifies whether to build a :min or a :max queue.
 
@@ -77,9 +79,9 @@ Example:
   pq = FastContainers::PriorityQueue.new(:min)
 ```
 
-### Public Instance Methods
+#### Public Instance Methods
 
-#### each { |obj,priority| ... } → self
+##### each { |obj,priority| ... } → self
 
 Iterates through the priority queue yielding each element to the given block. The order of the yielded elements is not defined. Returns self.
 
@@ -92,23 +94,23 @@ pq.each do |obj,priority|
 end
 ```
 
-#### next
+##### next
 
 Alias for: [top](#label-top+%E2%86%92+obj)
 
-#### next_key
+##### next_key
 
 Alias for: [top_key](#label-top_key+%E2%86%92+float)
 
-#### empty?
+##### empty?
 
 Returns true if the queue is empty
 
-#### pop → self
+##### pop → self
 
 Pops the top most element from the priority queue. Returns self.
 
-#### pop_each { |obj, priority| ... } → self
+##### pop_each { |obj, priority| ... } → self
 
 Iterates through the priority queue popping the top element and yielding it to the block. The order of yielded elements is guaranteed to be the priority order. Returns self.
 
@@ -120,22 +122,22 @@ ary.each { |x| pq.push(x.to_s, x)}
 ary.pop_each {|obj, priority| print(priority, ',') } # => 1,6,55,90,100,
 ```
 
-#### push(obj,priority) → self
+##### push(obj,priority) → self
 
 Push the obj/priority pair into the queue and returns self.
 
-#### size  → num
+##### size  → num
 
 Returns the size of the priority queue
 
-#### top → obj
+##### top → obj
 
 Returns the object at the top of the priority queue.
 
-#### top_key → float
+##### top_key → float
 
 Returns the priority of the object at the top of the priority queue.
 
-### Included Modules
+#### Included Modules
 
 The class Includes Enumerable, so that standard enumeration based methods (e.g., map, all?, any?, ...) can all be used with this container. Notice that Enumerable methods are based on #each, implying that the order used to iterate through the container is undefined.

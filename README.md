@@ -31,7 +31,7 @@ q.pop
 As far as I know, there are no C extensions implementing priority queues to date. This implies that the provided implementation is a *lot* faster than the best current alternative. 
 To get an idea about how faster it is, here it follows a comparison of the time needed to push and pop a given number of elements by FastContainers and others priority queues implementations that can be found on Rubygems. In each experiment the number of push/pop to be performed is chosen so to have a reasonable response time (within few minutes).
 
-### Comparison with [algorithms (0.6.1)](http://rubygems.org/gems/algorithms)
+### Comparison with [algorithms (0.6.1)](http://rubygems.org/gems/algorithms) (50,000 push/pop)
 
 ```ruby
 
@@ -63,7 +63,7 @@ Output (reformatted):
 Summary: FastContainers::PriorityQueues are *6461.5 times faster* on pushes and *49.3 times faster* on pops.
 
 
-### Comparison with [priority_queue (0.2.0)](http://rubygems.org/gems/priority_queue)
+### Comparison with [priority_queue (0.2.0)](http://rubygems.org/gems/priority_queue) (50,000 push/pop)
 
 ```ruby
 require 'fc'
@@ -93,7 +93,7 @@ Output (reformatted):
 
 Summary: FastContainers::PriorityQueues are *3.5 times faster* on pushes and *23918.25 times faster* on pops.
 
-### Comparison with [em-priority-queue (1.1.2)](http://rubygems.org/gems/em-priority-queue)
+### Comparison with [em-priority-queue (1.1.2)](http://rubygems.org/gems/em-priority-queue) (500,000 push/pop)
 
 ```ruby
 require 'fc'
@@ -123,7 +123,7 @@ Output (reformatted):
 
 Summary: FastContainers are *8.5 times faster* on pushes and *10.9 times faster* on pops.
 
-### Comparison with [pqueue (2.0.2)](http://rubygems.org/gems/pqueue)
+### Comparison with [pqueue (2.0.2)](http://rubygems.org/gems/pqueue) (100,000 push/pop)
 
 
 ```ruby

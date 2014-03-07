@@ -29,7 +29,9 @@ q.pop
 ## How fast is it?
 
 As far as I know, there are no C extensions implementing priority queues to date. This implies that the provided implementation is a *lot* faster than the best current alternative. 
-To get an idea about how faster it is, here it follows a comparison of the time needed to push and pop 50.000 elements by [algorithms](https://github.com/kanwei/algorithms) priority queue implementation and by the FastContainers implementation.
+To get an idea about how faster it is, here it follows a comparison of the time needed to push and pop 50.000 elements by FastContainers and others priority queues implementations that can be found on Rubygems. 
+
+### Comparison with [algorithms (0.6.1)](http://rubygems.org/gems/algorithms)
 
 ```ruby
 
@@ -53,10 +55,69 @@ Output (reformatted):
 
 |         |      user|    system|     total|       real |
 |:--------|---------:|---------:|---------:|-----------:|
-|algo:push|122.200000|  7.030000|129.230000|(129.172903)|
-|fc:push  |  0.020000|  0.000000|  0.020000|(  0.020261)|
-|algo:pop |  1.460000|  0.020000|  1.480000|(  1.476380)|
-|fc:pop   |  0.030000|  0.000000|  0.030000|(  0.029664)|
+|algo:push|122.200|  7.030|129.230|(129.173)|
+|fc:push  |  0.020|  0.000|  0.020|(  0.020)|
+|algo:pop |  1.460|  0.020|  1.480|(  1.476)|
+|fc:pop   |  0.030|  0.000|  0.030|(  0.030)|
+
+
+### Comparison with [priority_queue (0.2.0)](http://rubygems.org/gems/priority_queue)
+
+```ruby
+require 'fc'
+require 'priority_queue'
+require 'benchmark'
+
+N = 50_000
+pq_pq = PriorityQueue.new
+fc_pq = FastContainers::PriorityQueue.new(:min)
+
+Benchmark.bm do |bm|
+  bm.report('pq:push') { N.times { |n| pq_pq[rand] << n.to_s } }
+  bm.report('fc:push')   { N.times { |n| fc_pq.push(n.to_s, rand) } }
+  bm.report('pq:pop')  { N.times { pq_pq.shift } }
+  bm.report('fc:pop')    { N.times { fc_pq.pop } }
+end
+```
+
+Output (reformatted):
+
+|         |      user|    system|     total|       real |
+|:--------|---------:|---------:|---------:|-----------:|
+|pq:push  | 0.060    | 0.010    | 0.070    |(  0.062593)|
+|fc:push  | 0.020    | 0.000    | 0.020    |(  0.018866)|
+|pq:pop   | 948.440  | 8.290    | 956.730  |(956.676601)|
+|fc:pop   | 0.040    | 0.000    | 0.040    |(  0.032753)|
+
+### Comparison with [em-priority-queue (1.1.2)](http://rubygems.org/gems/em-priority-queue)
+
+Notice that for this comparison, we perform 500.000 operations instead of 50.000 (the other two implementations were so slow that a higher number of operations was not an option).
+
+```ruby
+require 'fc'
+require 'em-priority-queue'
+require 'benchmark'
+
+N = 500_000
+em_pq = EM::PriorityQueue.new
+fc_pq = FastContainers::PriorityQueue.new(:min)
+
+Benchmark.bm do |bm|
+  bm.report('em:push') { N.times { |n| em_pq.push(n.to_s, rand) } }
+  bm.report('fc:push') { N.times { |n| fc_pq.push(n.to_s, rand) } }
+  bm.report('em:pop')  { N.times { em_pq.pop {} } }
+  bm.report('fc:pop')  { N.times { fc_pq.pop } }
+end
+```
+
+Output (reformatted):
+
+|         |      user|    system|     total|       real |
+|:--------|---------:|---------:|---------:|-----------:|
+|em:push  |1.650  |0.130  | 1.780 | (  1.895794) |
+|fc:push  |0.190  |0.020  | 0.210 | (  0.224068) |
+|em:pop   |3.980  |0.180  | 4.160 | (  4.360084) |
+|fc:pop   |0.380  |0.000  | 0.380 | (  0.381250) |
 
 
 ## API

@@ -49,7 +49,7 @@ Benchmark.bm do |bm|
 end
 ```
 
-Outputs (reformatted):
+Output (reformatted):
 
 |         |      user|    system|     total|       real |
 |:--------|---------:|---------:|---------:|-----------:|

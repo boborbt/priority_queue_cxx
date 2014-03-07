@@ -25,12 +25,12 @@ require 'benchmark'
 # Performs 50.000 pushes and pops in priority queues using the fc and
 # algorithms implementations and reports the time spent.
 
-N = 500_000
-pq_pq = PQueue.new
+N = 100_000
+pq_pq = PQueue.new { |x,y| x[1] <=> y[1] }
 fc_pq = FastContainers::PriorityQueue.new(:min)
 
 Benchmark.bm do |bm|
-  bm.report('pq:push') { N.times { |n| pq_pq.push(rand) } }
+  bm.report('pq:push') { N.times { |n| pq_pq.push([n,rand]) } }
   bm.report('fc:push')   { N.times { |n| fc_pq.push(n.to_s, rand) } }
   bm.report('pq:pop')  { N.times { pq_pq.pop } }
   bm.report('fc:pop')    { N.times { fc_pq.pop } }

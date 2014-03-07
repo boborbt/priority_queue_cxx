@@ -18,15 +18,20 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-require 'fast_containers'
+require 'fc'
+require 'priority_queue'
+require 'benchmark'
 
-module FastContainers
-  VERSION = "0.2.11"
-  
-  class PriorityQueue
-    include Enumerable
-    
-    alias_method :next, :top
-    alias_method :next_key, :top_key
-  end
+# Performs 50.000 pushes and pops in priority queues using the fc and
+# algorithms implementations and reports the time spent.
+
+N = 50_000
+pq_pq = PriorityQueue.new
+fc_pq = FastContainers::PriorityQueue.new(:min)
+
+Benchmark.bm do |bm|
+  bm.report('pq:push') { N.times { |n| pq_pq[rand] << n.to_s } }
+  bm.report('fc:push')   { N.times { |n| fc_pq.push(n.to_s, rand) } }
+  bm.report('pq:pop')  { N.times { pq_pq.shift } }
+  bm.report('fc:pop')    { N.times { fc_pq.pop } }
 end

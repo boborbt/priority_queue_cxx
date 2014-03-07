@@ -60,6 +60,8 @@ Output (reformatted):
 |algo:pop |  1.460|  0.020|  1.480|(  1.476)|
 |fc:pop   |  0.030|  0.000|  0.030|(  0.030)|
 
+Summary: FastContainers::PriorityQueues are *6458.65 times faster* on pushes and *49.2 times faster* on pops.
+
 
 ### Comparison with [priority_queue (0.2.0)](http://rubygems.org/gems/priority_queue)
 
@@ -88,6 +90,8 @@ Output (reformatted):
 |fc:push  | 0.020    | 0.000    | 0.020    |(  0.018866)|
 |pq:pop   | 948.440  | 8.290    | 956.730  |(956.676601)|
 |fc:pop   | 0.040    | 0.000    | 0.040    |(  0.032753)|
+
+Summary: FastContainers::PriorityQueues are *3.5 times faster* on pushes and *29208.8 times faster* on pops.
 
 ### Comparison with [em-priority-queue (1.1.2)](http://rubygems.org/gems/em-priority-queue)
 
@@ -119,6 +123,7 @@ Output (reformatted):
 |em:pop   |3.980  |0.180  | 4.160 | (  4.360084) |
 |fc:pop   |0.380  |0.000  | 0.380 | (  0.381250) |
 
+Summary: FastContainers are *8.46 times faster* on pushes and *11.44 times faster* on pops.
 
 ## API
 

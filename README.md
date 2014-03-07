@@ -152,7 +152,7 @@ Output (reformatted):
 |pq:pop   | 0.010 | 0.000 |  0.010| (  0.018718)|
 |fc:pop   | 0.070 | 0.000 |  0.070| (  0.061138)|
 
-Summary: FastContainers are *1672.5 times faster* on pushes and 7 times slower* on pops.
+Summary: FastContainers are *1672.5 times faster* on pushes and *7 times slower* on pops.
 
 
 ## API

@@ -95,7 +95,7 @@ Summary: FastContainers::PriorityQueues are *3.5 times faster* on pushes and *29
 
 ### Comparison with [em-priority-queue (1.1.2)](http://rubygems.org/gems/em-priority-queue)
 
-Notice that for this comparison, we perform 500.000 operations instead of 50.000 (the other two implementations were so slow that a higher number of operations was not an option).
+Notice that for this comparison, we perform 500.000 operations instead of 50.000 (the previous two implementations were so slow that a higher number of operations was not an option).
 
 ```ruby
 require 'fc'
@@ -124,6 +124,36 @@ Output (reformatted):
 |fc:pop   |0.380  |0.000  | 0.380 | (  0.381250) |
 
 Summary: FastContainers are *8.46 times faster* on pushes and *11.44 times faster* on pops.
+
+### Comparison with [pqueue (2.0.2)](http://rubygems.org/gems/pqueue)
+
+Notice that for this comparison, we perform 500.000 operations instead of 50.000.
+
+```ruby
+require 'fc'
+require 'pqueue'
+require 'benchmark'
+
+N = 500_000
+pq_pq = PQueue.new
+fc_pq = FastContainers::PriorityQueue.new(:min)
+
+Benchmark.bm do |bm|
+  bm.report('pq:push') { N.times { |n| pq_pq.push(rand) } }
+  bm.report('fc:push')   { N.times { |n| fc_pq.push(n.to_s, rand) } }
+  bm.report('pq:pop')  { N.times { pq_pq.pop } }
+  bm.report('fc:pop')    { N.times { fc_pq.pop } }
+end
+```
+
+Output (reformatted):
+
+|         |      user|    system|     total|       real |
+|:--------|---------:|---------:|---------:|-----------:|
+| tbd | tbd | tbd|tbd|tbd| 
+
+Summary: FastContainers are *?? times ??* on pushes and *?? times ??* on pops.
+
 
 ## API
 

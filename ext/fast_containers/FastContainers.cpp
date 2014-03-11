@@ -122,7 +122,11 @@ static VALUE pq_top(VALUE self) {
  * Returns the priority of the object at the top of the priority queue.
  */
 static VALUE pq_top_key(VALUE self) {
-  double priority = fc_pq::top_key( pq_from_self(self) );
+  fc_pq::PQueue queue = pq_from_self(self);
+  if(fc_pq::empty(queue))
+    return Qnil;
+  
+  double priority = fc_pq::top_key( queue );
   return DBL2NUM(priority);
 }
 

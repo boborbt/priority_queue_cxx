@@ -155,4 +155,14 @@ class TestFastContainers < MiniTest::Unit::TestCase
     assert_equal sum_o, 6
     assert_equal sum_p, 60
   end
+  
+  def test_top_key_on_empty_queues
+    pq = FastContainers::PriorityQueue.new(:max)
+    assert_nil pq.top_key
+  end
+  
+  def test_top_on_empty_queues
+    pq = FastContainers::PriorityQueue.new(:max)
+    assert_nil pq.top
+  end
 end

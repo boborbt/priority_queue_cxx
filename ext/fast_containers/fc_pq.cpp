@@ -76,6 +76,16 @@ namespace fc_pq {
     return q->storage.at(0).second;
   }
   
+  double second_best_key(PQueue q) {
+     double key1 = q->storage.at(1).second;
+     double key2 = q->storage.at(2).second;
+     if( key1 > key2 ) {
+        return key1;
+     } else {
+        return key2;
+     }
+  }
+  
   void pop(PQueue q) {
     pop_heap(q->storage.begin(), q->storage.end(), q->comparator);
     q->storage.pop_back();

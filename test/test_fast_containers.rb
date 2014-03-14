@@ -165,4 +165,17 @@ class TestFastContainers < MiniTest::Unit::TestCase
     pq = FastContainers::PriorityQueue.new(:max)
     assert_nil pq.top
   end
+  
+  def test_second_best_key
+    pq = FastContainers::PriorityQueue.new(:max)
+    pq.push("x", 100);
+    pq.push("y", 80);
+    pq.push("z", 40);
+    pq.push("w", 60);
+    pq.push("i", 90);
+    pq.push("j", 95);
+    
+    assert_equal pq.second_best_key, 95
+  end
+  
 end

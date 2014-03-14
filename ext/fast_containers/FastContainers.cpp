@@ -126,8 +126,23 @@ static VALUE pq_top_key(VALUE self) {
   if(fc_pq::empty(queue))
     return Qnil;
   
-  double priority = fc_pq::top_key( queue );
+  double priority = fc_pq::top_key(queue);
   return DBL2NUM(priority);
+}
+
+/*
+ * call-seq:
+ *   second_best_key -> float
+ *
+ * Returns the priority of the second best element in the priority queue.
+ */
+static VALUE pq_second_best_key(VALUE self) {
+   fc_pq::PQueue queue = pq_from_self(self);
+   if(fc_pq::empty(queue))
+      return Qnil;
+   
+   double priority = fc_pq::second_best_key(queue);
+   return DBL2NUM(priority);
 }
 
 /*
@@ -238,6 +253,7 @@ extern "C" {
     rb_define_method(PriorityQueue, "push",     RUBY_METHOD_FUNC(pq_push), 2);
     rb_define_method(PriorityQueue, "top",      RUBY_METHOD_FUNC(pq_top), 0);
     rb_define_method(PriorityQueue, "top_key",  RUBY_METHOD_FUNC(pq_top_key), 0);
+    rb_define_method(PriorityQueue, "second_best_key", RUBY_METHOD_FUNC(pq_second_best_key), 0);
     rb_define_method(PriorityQueue, "pop",      RUBY_METHOD_FUNC(pq_pop), 0);
     rb_define_method(PriorityQueue, "empty?",    RUBY_METHOD_FUNC(pq_empty), 0);
     rb_define_method(PriorityQueue, "each",     RUBY_METHOD_FUNC(pq_each), 0);

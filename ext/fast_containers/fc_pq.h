@@ -47,6 +47,9 @@ namespace fc_pq {
   /* Inspecting the queue top (for priorities) */
   double top_key(PQueue q);
   
+ /* Returns the priority of the next best element */
+  double second_best_key(PQueue q);
+  
   /* Removing the queue top */
   void pop(PQueue q);
   

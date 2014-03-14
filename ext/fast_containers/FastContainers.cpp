@@ -138,7 +138,7 @@ static VALUE pq_top_key(VALUE self) {
  */
 static VALUE pq_second_best_key(VALUE self) {
    fc_pq::PQueue queue = pq_from_self(self);
-   if(fc_pq::empty(queue))
+   if(fc_pq::size(queue) < 2)
       return Qnil;
    
    double priority = fc_pq::second_best_key(queue);

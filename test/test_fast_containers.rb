@@ -178,4 +178,25 @@ class TestFastContainers < MiniTest::Unit::TestCase
     assert_equal pq.second_best_key, 95
   end
   
+  def test_second_best_key_on_empty_pq
+    pq = FastContainers::PriorityQueue.new(:max)
+    assert_nil pq.second_best_key
+  end
+  
+  def test_second_best_key_on_size_1_pq
+    pq = FastContainers::PriorityQueue.new(:max)
+    pq.push("x", 100)
+    assert_nil pq.second_best_key
+  end
+  
+  def test_second_best_key_on_size_2_pq
+    pq = FastContainers::PriorityQueue.new(:max)
+    pq.push("x", 100)
+    pq.push("x", 80)
+    
+    assert_equal pq.second_best_key, 80
+  end
+  
+  
+  
 end

@@ -77,6 +77,9 @@ namespace fc_pq {
   }
   
   double second_best_key(PQueue q) {
+     if(q->storage.size()==2)
+        return q->storage.at(1).second;
+     
      double key1 = q->storage.at(1).second;
      double key2 = q->storage.at(2).second;
      if( key1 > key2 ) {

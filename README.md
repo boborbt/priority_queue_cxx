@@ -33,16 +33,16 @@ To get an idea about how faster it is, here it follows a comparison of the time 
 
 The following table summarizes the results, details can be found in the next few sections.
 
-| library | avg msecs per push | avg msecs per pop | avg msecs per op |
+| library | avg &#956;s per push | avg &#956;s per pop | avg &#956;s per op |
 |:--------|---------:|---------:|---------:|
-| fast_containers   | 0.456   |  1.138  | 0.797 |
+| *fast_containers*   | *0.456*   |  *1.138*  | *0.797* |
 | PriorityQueue     | 2.09    | 5.186   | 3.638 |
 | em-priority-queue | 3.56    | 8.32    | 5.94  |
 | pqueue            | 669.0   | 0.1     | 334.55|
 | algorithms        | 2584.6  |   29.6  |1307.1 |
 | priority_queue    | 1.4     |19134.6  |9568.0 |
 
-where: results are sorted according to "avg msecs per op"; msecs stands for micro seconds; op stands for any operation (push or pop); the figures for fast_containers has been calculated with the results of experiments with PriorityQueue (where the number of push/pops is highest).
+where: results are sorted according to "avg &#956;s per op"; &#956;s stands for micro seconds; op stands for any operation (push or pop); the figures for fast_containers has been calculated with the results of experiments with PriorityQueue (the experiment with the highest number of operations).
 
 
 ### Comparison with [algorithms (0.6.1)](http://rubygems.org/gems/algorithms) (50,000 push/pop)
@@ -70,9 +70,9 @@ Output (reformatted):
 |         |      user|    system|     total|       real |
 |:--------|---------:|---------:|---------:|-----------:|
 |algo:push|122.200|  7.030|129.230|(129.173)|
-|fc:push  |  0.020|  0.000|  0.020|(  0.020)|
+|*fc:push*  |  *0.020*|  *0.000*|  *0.020*|*(  0.020)*|
 |algo:pop |  1.460|  0.020|  1.480|(  1.476)|
-|fc:pop   |  0.030|  0.000|  0.030|(  0.030)|
+|*fc:pop*   |  *0.030*|  *0.000*|  *0.030*|*(  0.030)*|
 
 Summary: FastContainers::PriorityQueues are *6461.5 times faster* on pushes and *49.3 times faster* on pops.
 
@@ -101,9 +101,9 @@ Output (reformatted):
 |         |      user|    system|     total|       real |
 |:--------|---------:|---------:|---------:|-----------:|
 |pq:push  | 0.060    | 0.010    | 0.070    |(  0.062593)|
-|fc:push  | 0.020    | 0.000    | 0.020    |(  0.018866)|
+|*fc:push*  | *0.020*    | *0.000*    | *0.020*    |*(  0.018866)*|
 |pq:pop   | 948.440  | 8.290    | 956.730  |(956.676601)|
-|fc:pop   | 0.040    | 0.000    | 0.040    |(  0.032753)|
+|*fc:pop*   | 0.040    | 0.000    | 0.040    |*(  0.032753)*|
 
 Summary: FastContainers::PriorityQueues are *3.5 times faster* on pushes and *23918.25 times faster* on pops.
 
@@ -131,9 +131,9 @@ Output (reformatted):
 |         |      user|    system|     total|       real |
 |:--------|---------:|---------:|---------:|-----------:|
 |em:push  |1.650  |0.130  | 1.780 | (  1.895794) |
-|fc:push  |0.190  |0.020  | 0.210 | (  0.224068) |
+|*fc:push*  |*0.190*  |*0.020*  | *0.210* | *(  0.224068)* |
 |em:pop   |3.980  |0.180  | 4.160 | (  4.360084) |
-|fc:pop   |0.380  |0.000  | 0.380 | (  0.381250) |
+|*fc:pop*   |*0.380*  |*0.000*  | *0.380* | *(  0.381250)* |
 
 Summary: FastContainers are *8.5 times faster* on pushes and *10.9 times faster* on pops.
 
@@ -162,9 +162,9 @@ Output (reformatted):
 |         |      user|    system|     total|       real |
 |:--------|---------:|---------:|---------:|-----------:|
 |pq:push  | 25.240|41.660 | 66.900| ( 66.871391)|
-|fc:push  | 0.040 | 0.000 |  0.040| (  0.035270)|
+|*fc:push*  | *0.040* | *0.000* |  *0.040*| *(  0.035270)*|
 |pq:pop   | 0.010 | 0.000 |  0.010| (  0.018718)|
-|fc:pop   | 0.070 | 0.000 |  0.070| (  0.061138)|
+|*fc:pop*   | *0.070* | *0.000* | *0.070*| *(  0.061138)*|
 
 Summary: FastContainers are *1672.5 times faster* on pushes and *7 times slower* on pops.
 
@@ -193,9 +193,9 @@ Output (reformatted):
 |         |      user|    system|     total|       real |
 |:--------|---------:|---------:|---------:|-----------:|
 |pq:push  | 10.020|  0.430| 10.45|( 10.665449)|
-|fc:push  |  2.110|  0.170|  2.28|(  2.452529)|
+|*fc:push*  |  *2.110*|  *0.170*|  *2.28*|*(  2.452529)*|
 |pq:pop   | 25.860|  0.070| 25.93|( 25.949438)|
-|fc:pop   |  5.690|  0.000|  5.69|(  5.688552)|
+|*fc:pop*   |  *5.690*|  *0.000*|  *5.69*|*(  5.688552)*|
 
 Summary: FastContainers are *4.58 times faster* on pushes and *4.54 times faster* on pops.
 

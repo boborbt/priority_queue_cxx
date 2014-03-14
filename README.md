@@ -31,6 +31,20 @@ q.pop
 As far as I know, there are no C extensions implementing priority queues to date. This implies that the provided implementation is a *lot* faster than the best current alternative. 
 To get an idea about how faster it is, here it follows a comparison of the time needed to push and pop a given number of elements by FastContainers and others priority queues implementations that can be found on Rubygems. In each experiment the number of push/pop to be performed is chosen so to have a reasonable response time (within few minutes).
 
+The following table summarizes the results, details can be found in the next few sections.
+
+| library | avg msecs per push | avg msecs per pop | avg msecs per op |
+|:--------|---------:|---------:|---------:|
+| fast_containers   | 0.456   |  1.138  | 0.797 |
+| PriorityQueue     | 2.09    | 5.186   | 3.638 |
+| em-priority-queue | 3.56    | 8.32    | 5.94  |
+| pqueue            | 669.0   | 0.1     | 334.55|
+| algorithms        | 2584.6  |   29.6  |1307.1 |
+| priority_queue    | 1.4     |19134.6  |9568.0 |
+
+where: results are sorted according to "avg msecs per op"; msecs stands for micro seconds; op stands for any operation (push or pop); the figures for fast_containers has been calculated with the results of experiments with PriorityQueue (where the number of push/pops is highest).
+
+
 ### Comparison with [algorithms (0.6.1)](http://rubygems.org/gems/algorithms) (50,000 push/pop)
 
 ```ruby
@@ -154,6 +168,36 @@ Output (reformatted):
 
 Summary: FastContainers are *1672.5 times faster* on pushes and *7 times slower* on pops.
 
+### Comparison with [PriorityQueue (0.1.2)](https://rubygems.org/gems/PriorityQueue) (5,000,000 push/pop)
+
+
+```ruby
+require 'fc'
+require 'priority_queue'
+require 'benchmark'
+
+N = 5_000_000
+pq_pq = CPriorityQueue.new
+fc_pq = FastContainers::PriorityQueue.new(:min)
+
+Benchmark.bm do |bm|
+  bm.report('pq:push') { N.times { |n| pq_pq.push(n.to_s,rand) } }
+  bm.report('fc:push') { N.times { |n| fc_pq.push(n.to_s, rand) } }
+  bm.report('pq:pop')  { N.times { pq_pq.delete_min } }
+  bm.report('fc:pop')  { N.times { fc_pq.pop } }
+end
+```
+
+Output (reformatted):
+
+|         |      user|    system|     total|       real |
+|:--------|---------:|---------:|---------:|-----------:|
+|pq:push  | 10.020|  0.430| 10.45|( 10.665449)|
+|fc:push  |  2.110|  0.170|  2.28|(  2.452529)|
+|pq:pop   | 25.860|  0.070| 25.93|( 25.949438)|
+|fc:pop   |  5.690|  0.000|  5.69|(  5.688552)|
+
+Summary: FastContainers are *4.58 times faster* on pushes and *4.54 times faster* on pops.
 
 ## API
 

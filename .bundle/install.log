@@ -1,0 +1,9 @@
+# Logfile created on 2014-03-14 15:58:34 +0100 by logger.rb/44203
+I, [2014-03-14T15:58:34.952136 #16070]  INFO -- : 0:  PriorityQueue (0.1.2) from /Users/esposito/.rvm/gems/ruby-2.1.0/specifications/PriorityQueue-0.1.2.gemspec
+I, [2014-03-14T15:58:34.974982 #16070]  INFO -- : 0:  algorithms (0.6.1) from /Users/esposito/.rvm/gems/ruby-2.1.0/specifications/algorithms-0.6.1.gemspec
+I, [2014-03-14T15:58:34.975437 #16070]  INFO -- : 0:  eventmachine (1.0.3) from /Users/esposito/.rvm/gems/ruby-2.1.0/specifications/eventmachine-1.0.3.gemspec
+I, [2014-03-14T15:58:34.975891 #16070]  INFO -- : 0:  stakach-algorithms (1.0.8) from /Users/esposito/.rvm/gems/ruby-2.1.0/specifications/stakach-algorithms-1.0.8.gemspec
+I, [2014-03-14T15:58:34.976330 #16070]  INFO -- : 0:  em-priority-queue (1.1.2) from /Users/esposito/.rvm/gems/ruby-2.1.0/specifications/em-priority-queue-1.1.2.gemspec
+I, [2014-03-14T15:58:34.976775 #16070]  INFO -- : 0:  pqueue (2.0.2) from /Users/esposito/.rvm/gems/ruby-2.1.0/specifications/pqueue-2.0.2.gemspec
+I, [2014-03-14T15:58:34.977164 #16070]  INFO -- : 0:  priority_queue (0.2.0) from /Users/esposito/.rvm/gems/ruby-2.1.0/specifications/priority_queue-0.2.0.gemspec
+I, [2014-03-14T15:58:34.977495 #16070]  INFO -- : 0:  bundler (1.5.1) from /Users/esposito/.rvm/gems/ruby-2.1.0@global/specifications/bundler-1.5.1.gemspec

@@ -152,8 +152,8 @@ class TestFastContainers < MiniTest::Unit::TestCase
     sum_o = 0
     sum_p = 0
     pq.map { |o,p| sum_o+=o; sum_p+=p }
-    assert_equal sum_o, 6
-    assert_equal sum_p, 60
+    assert_equal 6, sum_o 
+    assert_equal 60, sum_p
   end
   
   def test_top_key_on_empty_queues
@@ -194,9 +194,52 @@ class TestFastContainers < MiniTest::Unit::TestCase
     pq.push("x", 100)
     pq.push("x", 80)
     
-    assert_equal pq.second_best_key, 80
+    assert_equal 80, pq.second_best_key
   end
   
+  def test_each_will_iterate_over_all_elements
+    pq = FastContainers::PriorityQueue.new(:max);
+    pq.push("x", 100);
+    pq.push("y", 80);
+    pq.push("z", 40);
+    pq.push("w", 60);
+    pq.push("i", 90);
+    pq.push("j", 95);
+    
+    objects = Set.new
+    
+    result = pq.each do |obj, priority|
+      objects << obj
+    end
+    
+    assert_equal objects, Set.new(["x","y","z","w","i","j"])
+    assert_equal pq, result
+  end
   
-  
+  def test_each_will_abort_and_return_nil_if_queue_changes
+    pq = FastContainers::PriorityQueue.new(:max);
+    pq.push("x", 100);
+    pq.push("y", 80);
+    pq.push("z", 40);
+    pq.push("w", 60);
+    pq.push("i", 90);
+    pq.push("j", 95);
+    
+    objects = Set.new
+    
+    exception = assert_raises RuntimeError do
+      count = 0    
+      pq.each do |obj, priority|
+        if count==3
+          pq.push("no way!", 90)
+        end
+      
+        count+=1
+        objects << obj      
+      end
+    end
+    
+    assert_match /a change in the priority queue invalidated the current iterator/, exception.message
+    assert_equal 4, objects.size
+  end
 end

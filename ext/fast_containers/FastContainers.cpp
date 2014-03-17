@@ -184,21 +184,31 @@ static VALUE pq_empty(VALUE self) {
  *    each { |obj,priority| ... } -> self
  *
  * Iterates through the priority queue yielding each element to the given block.
- * The order of the yielded elements is not defined.
+ * The order of the yielded elements is not defined. The given block *must not* change
+ * the queue elements order. In case it does the iteration will be aborted and the
+ * method will return nil.
+ *
  * Returns self.
  */
 
 static VALUE pq_each(VALUE self) {
   fc_pq::PQueue queue = pq_from_self(self);
-  
-  fc_pq::PQueueIterator iterator = fc_pq::iterator(queue);
-  while( !fc_pq::iterator_end(iterator) ) {
-    VALUE value = (VALUE) fc_pq::iterator_get_value(iterator);
-    VALUE num = DBL2NUM(fc_pq::iterator_get_key(iterator));
-    rb_yield_values( 2,value, num );
-    fc_pq::iterator_next(iterator);
+  fc_pq::PQueueIterator iterator;
+    
+  try {
+    iterator = fc_pq::iterator(queue);
+    while( !fc_pq::iterator_end(iterator) ) {
+      VALUE value = (VALUE) fc_pq::iterator_get_value(iterator);
+      VALUE num = DBL2NUM(fc_pq::iterator_get_key(iterator));
+      rb_yield_values( 2,value, num );
+      fc_pq::iterator_next(iterator);
+    }
+    fc_pq::iterator_dispose(iterator);
+  } catch (fc_pq::PQueueException& exception) {
+    fc_pq::iterator_dispose(iterator);
+    rb_raise(rb_eRuntimeError, "%s", exception.what());
+    return Qnil;
   }
-  fc_pq::iterator_dispose(iterator);
   
   return self;
 }

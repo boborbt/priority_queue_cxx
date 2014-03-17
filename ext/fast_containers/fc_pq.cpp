@@ -42,11 +42,14 @@ namespace fc_pq {
   // --------------------------------------
     
   typedef std::vector<PQElem> PQueueStorage;
+  typedef unsigned int PQueueStorageVersion;
+  
   typedef struct _PQueue { 
     PQueueStorage storage;
     PairsComparator comparator;
+    PQueueStorageVersion version;
     
-    _PQueue(PQueueKind kind) : comparator(kind) { }
+    _PQueue(PQueueKind kind) : comparator(kind), version(0) { }
   }* PQueue;  
 
   void destroy(PQueue q){
@@ -64,6 +67,7 @@ namespace fc_pq {
   
   
   void push(PQueue q, void* value, double priority) {
+    q->version++;
     q->storage.push_back(PQElem(value, priority));
     push_heap(q->storage.begin(), q->storage.end(), q->comparator);
   }
@@ -90,6 +94,7 @@ namespace fc_pq {
   }
   
   void pop(PQueue q) {
+    q->version++;
     pop_heap(q->storage.begin(), q->storage.end(), q->comparator);
     q->storage.pop_back();
   }
@@ -102,15 +107,20 @@ namespace fc_pq {
   // Iterator
   // --------------------------------------
   
-
   
   typedef struct _PQueueIterator {
     PQueueStorage::const_iterator iterator;
-    PQueueStorage* queue;
+    PQueue pqueue;
+    PQueueStorage* storage;
+    PQueueStorageVersion version;
     
-    _PQueueIterator(PQueue q) {
-      queue = &q->storage;
-      iterator = q->storage.begin();      
+    _PQueueIterator(PQueue q) : iterator(q->storage.begin()), pqueue(q), storage(&q->storage), version(q->version) 
+      { }
+    
+    void checkVersion() throw(PQueueException) {
+      if(version != pqueue->version) {
+        throw PQueueException("FastContainers::PriorityQueue - a change in the priority queue invalidated the current iterator.");
+      }
     }
   } PQueueImplIterator;
   #define QIT(it) ((PQueueImplIterator*)(it))
@@ -136,12 +146,13 @@ namespace fc_pq {
   }
   
   /* Moves on to the next element */
-  PQueueIterator iterator_next(PQueueIterator it) {
+  PQueueIterator iterator_next(PQueueIterator it) throw(PQueueException) {
+    it->checkVersion();
     it->iterator++;
     return it;
   }
   
   bool iterator_end(PQueueIterator it) {
-    return it->iterator == it->queue->end();
+    return it->iterator == it->storage->end();
   }
 }

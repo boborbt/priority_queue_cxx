@@ -24,6 +24,11 @@
 #include <queue>
 
 namespace fc_pq {
+  class PQueueException : public std::runtime_error {
+  public:
+    PQueueException(const char* msg) : std::runtime_error(msg) {}
+  };
+  
   typedef struct _PQueue* PQueue;
   typedef struct _PQueueIterator* PQueueIterator;
   typedef enum { MIN_QUEUE, MAX_QUEUE } PQueueKind;
@@ -69,7 +74,7 @@ namespace fc_pq {
   double iterator_get_key(PQueueIterator it);
   
   /* Moves on to the next element */
-  PQueueIterator iterator_next(PQueueIterator it);
+  PQueueIterator iterator_next(PQueueIterator it) throw(PQueueException);
   
   /* Return true if the iterator is already out of the container */
   bool iterator_end(PQueueIterator it);

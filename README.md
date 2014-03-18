@@ -241,6 +241,10 @@ Alias for: [top](#label-top+%E2%86%92+obj)
 
 Alias for: [top_key](#label-top_key+%E2%86%92+float)
 
+#### second_best_key → float
+
+Returns the priority of the second best element in the priority queue.
+
 ##### empty?
 
 Returns true if the queue is empty

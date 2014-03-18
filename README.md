@@ -200,6 +200,10 @@ Output (reformatted):
 
 Summary: FastContainers are *4.58 times faster* on pushes and *4.54 times faster* on pops.
 
+## Which is the best priority queue implementation for ruby?
+
+As for most important questions the answer is: it depends. The evidence reported here shows that if you are only interested in the speed of push and pop methods, then ```FastContainers::PriorityQueue``` is a very good candidate. Few other important factors may make other libraries be better suited for your needs. The most glaring one is that ```FastContainers::PriorityQueue``` does not support changes of priorities<sup><a id="backref1" href="#ref1">1</a></sup>. If your problem requires this feature I would recommend using  [PriorityQueue (0.1.2)](https://rubygems.org/gems/PriorityQueue) library. Also, in making your choice you may want to consider the fact that not all the presented library are actively maintained (although, no one gave any problem at the time of the writing).
+
 ## API
 
 Here it follows a transcription of the RDoc documentation for the library. I'm adding it here because I've having difficulties in instructing the 'gem' executable to generate the correct files on installation (everything works fine using rdoc from the command line though). Any suggestion about how to solve this problem is *very* welcome.
@@ -284,3 +288,8 @@ Returns the priority of the object at the top of the priority queue.
 #### Included Modules
 
 The class Includes Enumerable, so that standard enumeration based methods (e.g., map, all?, any?, ...) can all be used with this container. Notice that Enumerable methods are based on #each, implying that the order used to iterate through the container is undefined.
+
+## Notes
+
+<sup id="ref1">1</sup> It is worth mentioning that, due to how priority queue are implemented by the C++ standard library, this implementation can't efficiently support priority changes. In any case, to support this feature would require important changes in the current API.<a href="#backref1" title="back reference">&#8617;</a>
+

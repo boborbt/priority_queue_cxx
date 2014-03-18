@@ -32,7 +32,7 @@ As far as I know, only the PriorityQueue gem provides priority queues as a C ext
 
 To get an idea about how fast it is, below we provide a comparison of the time needed to push and pop a large number of elements into a priority queue. Each experiment compares FastContainers with others priority queues implementations. Since timings varies greatly among different implementations, the number of push/pop performed is chosen so to make the experiments to run for (at most) few minutes.
 
-The following table summarizes the outputs, detailed results can be found in the next few sections.
+The following table summarizes the outputs, detailed results can be found in the next few sections. All libraries have been installed through the 'gem' command and executed using ruby v. 2.1.0.
 
 | library | avg &#956;s per push | avg &#956;s per pop | avg &#956;s per op |
 |:--------|---------:|---------:|---------:|
@@ -202,7 +202,7 @@ Summary: FastContainers are *4.58 times faster* on pushes and *4.54 times faster
 
 ## Which is the best priority queue implementation for ruby?
 
-As for most important questions the answer is: it depends. The evidence reported here shows that if you are only interested in the speed of push and pop methods, then ```FastContainers::PriorityQueue``` is a very good candidate. Few other important factors may make other libraries be better suited for your needs. The most glaring one is that ```FastContainers::PriorityQueue``` does not support changes of priorities<sup><a id="backref1" href="#notes">1</a></sup>. If your problem requires this feature I would recommend using  [PriorityQueue (0.1.2)](https://rubygems.org/gems/PriorityQueue) library. Also, in making your choice you may want to consider the fact that not all the presented library are actively maintained (although, no one gave any problem at the time of the writing).
+As it usually happens, the answer is: it depends. The evidence reported above shows that if you are only interested in the speed of push and pop methods, then ```FastContainers::PriorityQueue``` is a very good candidate. Few other important factors may make other libraries be better suited for your needs. The most glaring one is that ```FastContainers::PriorityQueue``` does not support changes of priorities<sup><a id="backref1" href="#notes">1</a></sup>. If your problem requires this feature, the best candidate appears to be  [PriorityQueue (0.1.2)](https://rubygems.org/gems/PriorityQueue) library. Also, in making your choice, you may want to consider the fact that not all the presented libraries are actively maintained (although, no one gave any problem at the time of the writing).
 
 ## API
 

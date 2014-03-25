@@ -2,9 +2,9 @@
 
 [![Gem Version](https://badge.fury.io/rb/priority_queue_cxx.png)](http://badge.fury.io/rb/priority_queue_cxx)
 
-FastContainers provides a fast implementatin of priority queues for ruby. Speed is achieved by exposing  the c++ standard implementation through a light ruby wrapper. As a bigger project, the library may grow  a number of containers that are not in the standard ruby library and are presently only available as pure ruby libraries, but presently the library includes a single class named PriorityQueue. More containers will be added as necessity arises. Contributors and feature requests are most welcome.
+*FastContainers* provides a fast implementatin of priority queues for ruby. Speed is achieved by exposing  the c++ standard implementation through a light ruby wrapper. As a bigger project, the library may grow to provide a number of containers that are not in the standard ruby library and are presently only available as pure ruby libraries. Presently, however, the library includes a single class named PriorityQueue. More containers will be added as necessity arises. Contributors and feature requests are most welcome.
 
-The library exposes a module named 'FastContainers' (to be required using ```require 'fc'```) which provides the PriorityQueue class.
+The library exposes a module named ```FastContainers``` (to be required using ```require 'fc'```) which provides the PriorityQueue class.
 
 ## Installation
 
@@ -217,7 +217,7 @@ Create a new priority queue and returns it. queue_kind specifies whether to buil
 
 Example:
 
-```ruby 
+```ruby
   pq = FastContainers::PriorityQueue.new(:min)
 ```
 
@@ -291,4 +291,3 @@ The class Includes Enumerable, so that standard enumeration based methods (e.g.,
 ## Notes
 
 <sup id="ref1">1</sup> It is worth mentioning that, due to how priority queue are implemented by the C++ standard library, this implementation can't efficiently support priority changes. In any case, to support this feature would require important changes in the current API.<a href="#which-is-the-best-priority-queue-implementation-for-ruby" title="back reference">&#8617;</a>
-

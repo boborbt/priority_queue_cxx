@@ -1,9 +1,9 @@
 Gem::Specification.new do |s|
-  s.name        = "fast_containers"
-  s.version     = "0.3.1"
-  s.summary     = "Fast containers not included in the std library. Presently implements: priority queues"
-  s.date        = "2014-03-17"
-  s.description = "A thin wrapper around C++ containers (presently implements: priority queues)"
+  s.name        = "priority_queue_cxx"
+  s.version     = "0.3.2"
+  s.summary     = "Fast (c++ wrapper) priority queue implementation for ruby."
+  s.date        = "2014-03-25"
+  s.description = "A thin wrapper around C++ priority queues"
   s.authors     = ["Roberto Esposito"]
   s.email       = ["boborbt@gmail.com"]
   s.homepage    = "https://github.com/boborbt/fast_containers"

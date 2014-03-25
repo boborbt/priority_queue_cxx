@@ -1,6 +1,6 @@
 # PriorityQueueCxx
 
-[![Gem Version](https://badge.fury.io/rb/fast_containers.png)](http://badge.fury.io/rb/fast_containers)
+[![Gem Version](https://badge.fury.io/rb/priority_queue_cxx.png)](http://badge.fury.io/rb/priority_queue_cxx)
 
 FastContainers provides a fast implementatin of priority queues for ruby. Speed is achieved by exposing  the c++ standard implementation through a light ruby wrapper. As a bigger project, the library may grow  a number of containers that are not in the standard ruby library and are presently only available as pure ruby libraries, but presently the library includes a single class named PriorityQueue. More containers will be added as necessity arises. Contributors and feature requests are most welcome.
 

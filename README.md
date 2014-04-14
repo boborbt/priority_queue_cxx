@@ -29,7 +29,7 @@ q.pop
 
 As far as I know, only one other library (the PriorityQueue gem) provides priority queues implemented as a C extension. This implies that the fc::PriorityQueue is a *lot* faster than most current alternatives and, as shown below, it compares favorably with the mentioned C extension as well.
 
-To get an idea about how fast it is, below we provide a comparison of the time needed to push and pop a large number of elements into a priority queue. Each experiment compares FastContainers with others priority queues implementations. Since timings varies greatly among different implementations, the number of push/pop performed is chosen so to make the experiments to run for (at most) few minutes.
+To get an idea about how fast it is, below I provide a comparison of the time needed to push and pop a large number of elements into a priority queue. Each experiment compares FastContainers with others priority queues implementations. Since timings varies greatly among different implementations, the number of push/pop performed is chosen so to make the experiments to run for (at most) few minutes.
 
 The following table summarizes the outputs, detailed results can be found in the next few sections. All libraries have been installed through the 'gem' command and executed using ruby v. 2.1.0.
 

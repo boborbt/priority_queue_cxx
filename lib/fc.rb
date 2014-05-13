@@ -21,7 +21,7 @@
 require 'fast_containers'
 
 module FastContainers
-  VERSION = "0.3.3"
+  VERSION = "0.3.4"
 
   class PriorityQueue
     include Enumerable

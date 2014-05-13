@@ -2,7 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/priority_queue_cxx.png)](http://badge.fury.io/rb/priority_queue_cxx)
 
-*FastContainers* provides a fast implementatin of priority queues for ruby. Speed is achieved by exposing  the c++ standard implementation through a light ruby wrapper. As a bigger project, the library may grow to provide a number of containers that are not in the standard ruby library and are presently only available as pure ruby libraries. Presently, however, the library includes a single class named PriorityQueue. More containers will be added as necessity arises. Contributors and feature requests are most welcome.
+*PriorityQueueCxx* provides a fast implementatin of priority queues for ruby. Speed is achieved by exposing  the c++ standard implementation through a light ruby wrapper. As a bigger project, the library may grow to provide a number of containers that are not in the standard ruby library and are presently only available as pure ruby libraries. Presently, however, the library includes a single class named PriorityQueue. More containers will be added as necessity arises. Contributors and feature requests are most welcome.
 
 The library exposes a module named ```FastContainers``` (to be required using ```require 'fc'```) which provides the PriorityQueue class.
 
@@ -29,7 +29,7 @@ q.pop
 
 As far as I know, only one other library (the PriorityQueue gem) provides priority queues implemented as a C extension. This implies that the fc::PriorityQueue is a *lot* faster than most current alternatives and, as shown below, it compares favorably with the mentioned C extension as well.
 
-To get an idea about how fast it is, below we provide a comparison of the time needed to push and pop a large number of elements into a priority queue. Each experiment compares FastContainers with others priority queues implementations. Since timings varies greatly among different implementations, the number of push/pop performed is chosen so to make the experiments to run for (at most) few minutes.
+To get an idea about how fast it is, below I provide a comparison of the time needed to push and pop a large number of elements into a priority queue. Each experiment compares FastContainers with other priority queues implementations. Since timings varies greatly among different implementations, the number of push/pop performed is chosen so to make the experiments to run for (at most) few minutes.
 
 The following table summarizes the outputs, detailed results can be found in the next few sections. All libraries have been installed through the 'gem' command and executed using ruby v. 2.1.0.
 

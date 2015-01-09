@@ -44,7 +44,7 @@ The following table summarizes the outputs, detailed results can be found in the
 | algorithms        | 2584.6  |   29.6  |1307.1 |
 | priority_queue    | 1.4     |19134.6  |9568.0 |
 
-where: results are sorted according to "avg &#956;s per op" (higher is better); &#956;s stands for micro seconds; op stands for any operation (push or pop); the figures for priority_queue_cxx has been calculated with the results of experiments with PriorityQueue (the experiment with the highest number of operations).
+where: results are sorted according to "avg &#956;s per op" (higher in the list is better); &#956;s stands for micro seconds; op stands for any operation (push or pop); the figures for priority_queue_cxx has been calculated with the results of experiments with PriorityQueue (the experiment with the highest number of operations).
 
 
 ### Comparison with [algorithms (0.6.1)](http://rubygems.org/gems/algorithms) (50,000 push/pop)

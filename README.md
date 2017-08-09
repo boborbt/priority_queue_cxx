@@ -4,7 +4,7 @@
 [![priority_queue_cxx API Documentation](https://www.omniref.com/ruby/gems/priority_queue_cxx.png)](https://www.omniref.com/ruby/gems/priority_queue_cxx)
 
 
-*PriorityQueueCxx* provides a fast implementatin of priority queues for ruby. Speed is achieved by exposing  the c++ standard implementation through a light ruby wrapper. As a bigger project, the library may grow to provide a number of containers that are not in the standard ruby library and are presently only available as pure ruby libraries. Presently, however, the library includes a single class named PriorityQueue. More containers will be added as necessity arises. Contributors and feature requests are most welcome.
+*PriorityQueueCxx* provides a fast implementation of priority queues for ruby. Speed is achieved by exposing  the c++ standard implementation through a light ruby wrapper. As a bigger project, the library may grow to provide a number of containers that are not in the standard ruby library and are presently only available as pure ruby libraries. Presently, however, the library includes a single class named PriorityQueue. More containers will be added as necessity arises. Contributors and feature requests are most welcome.
 
 The library exposes a module named ```FastContainers``` (to be required using ```require 'fc'```) which provides the PriorityQueue class.
 

@@ -207,7 +207,7 @@ As it usually happens, the answer is: it depends. The evidence reported above sh
 
 ## API
 
-Here it follows a transcription of the RDoc documentation for the library. I'm adding it here because I've having difficulties in instructing the 'gem' executable to generate the correct files on installation (everything works fine using rdoc from the command line though). Any suggestion about how to solve this problem is *very* welcome.
+Here it follows a transcription of the RDoc documentation for the library. I'm adding it here because I'm having difficulties in instructing the 'gem' executable to generate the correct files on installation (everything works fine using rdoc from the command line though). Any suggestion about how to solve this problem is *very* welcome.
 
 ### FastContainers::PriorityQueue
 

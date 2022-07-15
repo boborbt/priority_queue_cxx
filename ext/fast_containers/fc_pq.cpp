@@ -117,7 +117,7 @@ namespace fc_pq {
     _PQueueIterator(PQueue q) : iterator(q->storage.begin()), pqueue(q), storage(&q->storage), version(q->version)
       { }
 
-    void checkVersion() throw(PQueueException) {
+    void checkVersion() {
       if(version != pqueue->version) {
         throw PQueueException("FastContainers::PriorityQueue - a change in the priority queue invalidated the current iterator.");
       }
@@ -146,7 +146,7 @@ namespace fc_pq {
   }
 
   /* Moves on to the next element */
-  PQueueIterator iterator_next(PQueueIterator it) throw(PQueueException) {
+  PQueueIterator iterator_next(PQueueIterator it) {
     it->checkVersion();
     it->iterator++;
     return it;

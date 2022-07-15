@@ -75,7 +75,7 @@ namespace fc_pq {
   double iterator_get_key(PQueueIterator it);
 
   /* Moves on to the next element */
-  PQueueIterator iterator_next(PQueueIterator it) throw(PQueueException);
+  PQueueIterator iterator_next(PQueueIterator it);
 
   /* Return true if the iterator is already out of the container */
   bool iterator_end(PQueueIterator it);

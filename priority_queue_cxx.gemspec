@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "priority_queue_cxx"
-  s.version     = "0.3.5"
+  s.version     = "0.3.6"
   s.summary     = "Fast (c++ wrapper) priority queue implementation for ruby."
   s.date        = "2014-03-25"
   s.description = "Fast priority queue implementation (c++ wrapper, see README.md for a comparison with other libraries)"

@@ -255,6 +255,7 @@ extern "C" {
   void Init_fast_containers() {
     FastContainers = rb_define_module("FastContainers");
     PriorityQueue = rb_define_class_under(FastContainers, "PriorityQueue", rb_cObject);
+    rb_undef_alloc_func(PriorityQueue);
     rb_global_variable(&FastContainers);
     rb_global_variable(&PriorityQueue);
     

@@ -1,22 +1,17 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    PriorityQueue (0.1.2)
     algorithms (0.6.1)
-    em-priority-queue (1.1.2)
-      eventmachine (>= 1.0.0.beta.3)
-      stakach-algorithms
-    eventmachine (1.0.3)
     pqueue (2.0.2)
     priority_queue (0.2.0)
-    stakach-algorithms (1.0.8)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  PriorityQueue
   algorithms
-  em-priority-queue
   pqueue
   priority_queue
+
+BUNDLED WITH
+   2.3.11

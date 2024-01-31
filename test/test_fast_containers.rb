@@ -19,9 +19,11 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 require "minitest/autorun"
+require 'minitest/spec'
+require 'minitest/autorun'
 require "fc"
 
-class TestFastContainers < MiniTest::Unit::TestCase
+class TestFastContainers < Minitest::Test
   def test_new_object_creation
     assert !FastContainers::PriorityQueue.new(:max).nil?
   end
@@ -177,6 +179,15 @@ class TestFastContainers < MiniTest::Unit::TestCase
     
     assert_equal pq.second_best_key, 95
   end
+
+  def test_second_best_key_on_min_queues
+    pq = FastContainers::PriorityQueue.new(:min)
+    pq.push("a",2)
+    pq.push("b",2)
+    pq.push("c",3)
+
+    assert_equal pq.second_best_key, 2
+  end
   
   def test_second_best_key_on_empty_pq
     pq = FastContainers::PriorityQueue.new(:max)
@@ -239,7 +250,7 @@ class TestFastContainers < MiniTest::Unit::TestCase
       end
     end
     
-    assert_match /a change in the priority queue invalidated the current iterator/, exception.message
+    assert_match (/a change in the priority queue invalidated the current iterator/), exception.message
     assert_equal 4, objects.size
   end
 end

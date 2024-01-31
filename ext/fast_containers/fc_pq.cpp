@@ -81,15 +81,18 @@ namespace fc_pq {
   }
 
   double second_best_key(PQueue q) {
+     // elements in storage are not necessarily sorted, but the 
+     // second best key is bound to be in one of the first two elements
      if(q->storage.size()==2)
         return q->storage.at(1).second;
 
      double key1 = q->storage.at(1).second;
      double key2 = q->storage.at(2).second;
-     if( key1 > key2 ) {
-        return key1;
-     } else {
+
+    if( q->comparator(q->storage.at(1), q->storage.at(2)) ) {
         return key2;
+     } else {
+        return key1;
      }
   }
 
